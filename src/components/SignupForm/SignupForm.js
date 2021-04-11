@@ -1,5 +1,6 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, useLocation } from 'react-router-dom'
+import {AnimatePresence} from 'framer-motion'
 import ProfileForm from './1ProfileForm'
 import SocialForm from './2SocialForm'
 import Review from './3Review'
@@ -7,6 +8,8 @@ import StepLinks from './StepLinks'
 import { SignupFormProvider } from './SignupFormContext'
 
 export default function SignupForm() {
+    const location = useLocation()
+    
     return (
         <SignupFormProvider>
             <div className="signup-form">
@@ -14,12 +17,14 @@ export default function SignupForm() {
                 <StepLinks />
 
                 {/* show the forms*/}
-                <Switch>
+                <AnimatePresence>
+                <Switch locaiton={location} key={location.pathname}>
                     <Route path="/" exact component={ProfileForm} />
                     <Route path="/social" component={SocialForm} />
                     <Route path="/review" component={Review} />
 
                 </Switch>
+                </AnimatePresence>
             </div>
         </SignupFormProvider>
     )
